@@ -51,7 +51,7 @@ def f(Constituent,Station,PlotType):
         text = graph3(Data , Station, Constituent  )
         display(text)
     elif PlotType == "Boxplots by year":
-        graph4(Data , Station, Constituent  )
+        text =graph4(Data , Station, Constituent  )
         display(text)
     elif PlotType == "Boxplots by Quarter":
         text =AnaVSPot3( DataX , Constituent , Station) 
