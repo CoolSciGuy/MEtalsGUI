@@ -33,7 +33,7 @@ Data['quarter']=Data.index.quarter
 DataX = Data
  
 PlotType = ""
-msg = ""
+text = ""
 
 def f(Constituent,Station,PlotType):
     

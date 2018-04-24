@@ -121,7 +121,7 @@ def graph(Data , Station, Constituent ):
         plt.grid(True)
         plt.show()
         plt.rcParams.update({'font.size': 12})
-       
+        return  'Distribution of Ambient '+Constituent+' data' + ' ('+Station+')' 
         
         
 def graph2(Data , Station, Constituent ):
@@ -149,6 +149,7 @@ def graph2(Data , Station, Constituent ):
         plt.title('Boxplot of Ambient '+Constituent+' over months' + ' ('+Station+')')
         plt.gcf().autofmt_xdate()
         plt.show()
+        return  'Boxplot of Ambient '+Constituent+' over months' + ' ('+Station+')' 
 
 
 def graph3(Data , Station, Constituent  ):
@@ -178,6 +179,7 @@ def graph3(Data , Station, Constituent  ):
             plt.title('Boxplot of Ambient '+Constituent+' by station')
             plt.gcf().autofmt_xdate()
             plt.show()
+            return  'Boxplot of Ambient '+Constituent+' by station'
         else:
             return  "Option not available , select (All stations) or (All potomac) to activate"
 
@@ -207,7 +209,7 @@ def graph4(Data , Station, Constituent ):
         plt.title('Boxplot of Ambient '+Constituent+' by year'+ ' ('+Station+')')
         plt.gcf().autofmt_xdate()
         plt.show()
-            
+        return     'Boxplot of Ambient '+Constituent+' by year'+ ' ('+Station+')'
             
             
 
@@ -232,6 +234,7 @@ def AnaVSPot( DataX , Constituent , Station):
         sns.boxplot(x="year", y= Constituent, hue="Watershed", data=DataX ,showfliers=False)    
         plt.ylabel(Constituent+Unit)
         plt.show()
+        return 'Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)'
 
             
             
@@ -255,7 +258,7 @@ def AnaVSPot2( DataX , Constituent , Station ):
         plt.title('Scatterplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)')
         plt.ylabel(Constituent+Unit)
         plt.show()   
-            
+        return 'Scatterplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)'   
  
     # this function draws barplots seperated by year and quarter
 def AnaVSPot3( DataX , Constituent , Station):
@@ -285,5 +288,5 @@ def AnaVSPot3( DataX , Constituent , Station):
         plt.title('Boxplot of Ambient '+Constituent+' by year and quarter'+ ' ('+Station+')')
         plt.ylabel(Constituent+Unit)
         plt.show() 
-            
+        return  'Boxplot of Ambient '+Constituent+' by year and quarter'+ ' ('+Station+')'  
            
