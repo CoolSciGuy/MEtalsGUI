@@ -91,7 +91,7 @@ def graph(Data , Station, Constituent ):
         DataX=Data[(Data['Watershed'] == "Anacostia")]
     elif Station =='All Potomac':
         DataX = Data[(Data['Watershed'] == "Potomac")] 
-    elif Station <>'All stations' and Station <>'All Anacostia' and Station <>'All Potomac':
+    elif Station !='All stations' and Station !='All Anacostia' and Station !='All Potomac':
         DataX =  Data[(Data['Station'] == Station)]  
     
 
@@ -138,7 +138,7 @@ def graph2(Data , Station, Constituent ):
         DataX=Data[(Data['Watershed'] == "Anacostia")]
     elif Station =='All Potomac':
         DataX = Data[(Data['Watershed'] == "Potomac")] 
-    elif Station <>'All stations' and Station <>'All Anacostia' and Station <>'All Potomac':
+    elif Station !='All stations' and Station !='All Anacostia' and Station !='All Potomac':
         DataX =  Data[(Data['Station'] == Station)] 
 
     if DataX[Constituent].sum() == 0:
@@ -165,7 +165,7 @@ def graph3(Data , Station, Constituent  ):
         DataX=Data[(Data['Watershed'] == "Anacostia")]
     elif Station =='All Potomac':
         DataX = Data[(Data['Watershed'] == "Potomac")] 
-    elif Station <>'All stations' and Station <>'All Anacostia' and Station <>'All Potomac':
+    elif Station !='All stations' and Station !='All Anacostia' and Station !='All Potomac':
         DataX =  Data[(Data['Station'] == Station)]     
 
     if DataX[Constituent].sum() == 0:
@@ -196,7 +196,7 @@ def graph4(Data , Station, Constituent ):
         DataX=Data[(Data['Watershed'] == "Anacostia")]
     elif Station =='All Potomac':
         DataX = Data[(Data['Watershed'] == "Potomac")] 
-    elif Station <>'All stations' and Station <>'All Anacostia' and Station <>'All Potomac':
+    elif Station !='All stations' and Station !='All Anacostia' and Station !='All Potomac':
         DataX =  Data[(Data['Station'] == Station)] 
 
     if DataX[Constituent].sum() == 0:
@@ -269,7 +269,7 @@ def AnaVSPot3( DataX , Constituent , Station):
         DataX=DataX[(DataX['Watershed'] == "Anacostia")]
     elif Station =='All Potomac':
         DataX = DataX[(DataX['Watershed'] == "Potomac")] 
-    elif Station <>'All stations' and Station <>'All Anacostia' and Station <>'All Potomac':
+    elif Station !='All stations' and Station !='All Anacostia' and Station !='All Potomac':
         DataX =  DataX[(DataX['Station'] == Station)]  
     
     
