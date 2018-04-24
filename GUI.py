@@ -18,14 +18,11 @@ from IPython.display import display
 
 from analysis import graph , graph2 , graph3, graph4 , AnaVSPot,AnaVSPot2, AnaVSPot3
 import pandas as pd
-import os
-cwd = os.getcwd()
-
 
 
 
 #---------------------read data-------------------------------------------------------------
-Data = pd.read_csv(cwd + '\\ambient.csv')
+Data = pd.read_csv('ambient.csv')
 Data['Date'] = pd.to_datetime(Data['Date'])
 Data.index = Data['Date']
 del Data['Date']
