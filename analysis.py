@@ -10,8 +10,6 @@ Code modified on 03-05-18 to work better with datasets that have nan values.
 
 import numpy as np
 import matplotlib.pyplot as plt
-import Tkinter as tk
-import ttk
 
 def units(Constituent,Unit):
     if Constituent == 'Turbidity': 
