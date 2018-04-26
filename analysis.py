@@ -76,14 +76,11 @@ def units(Constituent,Unit):
 
 
 
-
+#CDF and Histogram
 def graph(Data , Station, Constituent ):
     
-
     Unit= ""
     Unit =  units(Constituent,Unit)
-
-    
     DataX=Data
     if Station =='All Anacostia':
         DataX=Data[(Data['Watershed'] == "Anacostia")]
@@ -92,11 +89,9 @@ def graph(Data , Station, Constituent ):
     elif Station !='All stations' and Station !='All Anacostia' and Station !='All Potomac':
         DataX =  Data[(Data['Station'] == Station)]  
     
-
     #resample the dataset
     Data2 = DataX[Constituent].as_matrix() #matrix
     Data2=Data2[~np.isnan(Data2)]
-    
     
     #error if there is no data
     if Data2.sum() == 0:
@@ -164,9 +159,9 @@ def graph2(Data , Station, Constituent ):
         stats2 = DataX [[ Constituent ]].describe()
             
         return  stats , stats2
-        #return  'Boxplot of Ambient '+Constituent+' over months' + ' ('+Station+')' 
+        
 
-    #grouping all data by station
+#grouping all data by station
 def graph3(Data , Station, Constituent  ):
 
     
@@ -186,25 +181,24 @@ def graph3(Data , Station, Constituent  ):
         return  "No data here" 
     else:
 
-        if Station =='All stations' or Station =='All Anacostia' or Station =='All Potomac':
-            DataX.boxplot(column = [Constituent],by='Station' , figsize = (15,6),showfliers=showflier)
-            plt.ylabel(Constituent+Unit )
-            plt.suptitle("")
-            plt.xlabel('Stations, n = ' + str(DataX[Constituent].count()))
-            plt.title('Boxplot of Ambient '+Constituent+' by station')
-            plt.gcf().autofmt_xdate()
-            plt.show()
-            
-            stats = DataX [[ Constituent , 'Station']].groupby('Station').describe()
-            stats2 = DataX [[ Constituent ]].describe()
-            
-            return  stats , stats2
-            #return  'Boxplot of Ambient '+Constituent+' by station'
-        else:
-            return  "Option not available , select (All stations) or (All potomac) to activate"
+
+        DataX.boxplot(column = [Constituent],by='Station' , figsize = (15,6),showfliers=showflier)
+        plt.ylabel(Constituent+Unit )
+        plt.suptitle("")
+        plt.xlabel('Stations, n = ' + str(DataX[Constituent].count()))
+        plt.title('Boxplot of Ambient '+Constituent+' by station')
+        plt.gcf().autofmt_xdate()
+        plt.show()
+        
+        stats = DataX [[ Constituent , 'Station']].groupby('Station').describe()
+        stats2 = DataX [[ Constituent ]].describe()
+        
+        return  stats , stats2
+        
 
 
-    #grouping all data by year
+
+#grouping all data by year
 def graph4(Data , Station, Constituent ):
 
 
@@ -233,9 +227,7 @@ def graph4(Data , Station, Constituent ):
         stats = DataX [[ Constituent , 'year']].groupby('year').describe()
         stats2 = DataX [[ Constituent ]].describe()
             
-        return  stats , stats2 #'Boxplot of Ambient '+Constituent+' by station'
-        
-        #return     'Boxplot of Ambient '+Constituent+' by year'+ ' ('+Station+')'
+        return  stats , stats2  
             
             
 
@@ -314,19 +306,16 @@ def AnaVSPot3( DataX , Constituent , Station):
         plt.title('Boxplot of Ambient '+Constituent+' by year and quarter'+ ' ('+Station+')')
         plt.ylabel(Constituent+Unit)
         plt.show() 
+        
+ 
+        stats = DataX [[ Constituent , 'quarter']].groupby('quarter').describe()
+        stats2 = DataX [[ Constituent ]].describe()
+        stats3 = DataX [[ Constituent , 'YearQuart']].groupby('YearQuart').describe()
+        return  stats , stats2 , stats3
+        
+        
         return  'Boxplot of Ambient '+Constituent+' by year and quarter'+ ' ('+Station+')'  
 
 
 
-class DictTable(dict):
-    # Overridden dict class which takes a dict in the form {'a': 2, 'b': 3},
-    # and renders an HTML Table in IPython Notebook.
-    def _repr_html_(self):
-        html = ["<table width=100%>"]
-        for key, value in self.iteritems():
-            html.append("<tr>")
-            html.append("<td>{0}</td>".format(key))
-            html.append("<td>{0}</td>".format(value))
-            html.append("</tr>")
-        html.append("</table>")
-        return ''.join(html)           
+     
