@@ -95,7 +95,9 @@ def graph(Data , Station, Constituent ):
     
     #error if there is no data
     if Data2.sum() == 0:
-        return  "No data here"  
+        return  "No data here" 
+         
+    
 
     else:        
         
@@ -145,7 +147,9 @@ def graph2(Data , Station, Constituent ):
         DataX =  Data[(Data['Station'] == Station)] 
 
     if DataX[Constituent].sum() == 0:
-        return  "No data here" 
+        import pandas as pd
+        return  pd.DataFrame({'A' : []}) , pd.DataFrame({'A' : []}) 
+
     else:
         DataX.boxplot(column = [Constituent],by='months2' , figsize = (15,6),showfliers=showflier)
         plt.ylabel(Constituent+Unit)
@@ -158,7 +162,7 @@ def graph2(Data , Station, Constituent ):
         stats = DataX [[ Constituent , 'months2']].groupby('months2').describe()
         stats2 = DataX [[ Constituent ]].describe()
             
-        return  stats , stats2
+        return  stats.round(decimals=2) , stats2.round(decimals=2)
         
 
 #grouping all data by station
@@ -178,7 +182,8 @@ def graph3(Data , Station, Constituent  ):
         DataX =  Data[(Data['Station'] == Station)]     
 
     if DataX[Constituent].sum() == 0:
-        return  "No data here" 
+        import pandas as pd
+        return  pd.DataFrame({'A' : []}) , pd.DataFrame({'A' : []}) 
     else:
 
 
@@ -193,7 +198,7 @@ def graph3(Data , Station, Constituent  ):
         stats = DataX [[ Constituent , 'Station']].groupby('Station').describe()
         stats2 = DataX [[ Constituent ]].describe()
         
-        return  stats , stats2
+        return  stats.round(decimals=2) , stats2.round(decimals=2)
         
 
 
@@ -214,7 +219,8 @@ def graph4(Data , Station, Constituent ):
         DataX =  Data[(Data['Station'] == Station)] 
 
     if DataX[Constituent].sum() == 0:
-        return  "No data here" 
+        import pandas as pd
+        return  pd.DataFrame({'A' : []}) , pd.DataFrame({'A' : []}) 
     else:
         DataX.boxplot(column = [Constituent],by='year' , figsize = (15,6),showfliers=showflier)
         plt.ylabel(Constituent+Unit)
@@ -227,7 +233,7 @@ def graph4(Data , Station, Constituent ):
         stats = DataX [[ Constituent , 'year']].groupby('year').describe()
         stats2 = DataX [[ Constituent ]].describe()
             
-        return  stats , stats2  
+        return  stats.round(decimals=2) , stats2.round(decimals=2)  
             
             
 
@@ -278,7 +284,7 @@ def AnaVSPot2( DataX , Constituent , Station ):
         plt.show()   
         return 'Scatterplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)'   
  
-    # this function draws barplots seperated by year and quarter
+# this function draws barplots seperated by year and quarter
 def AnaVSPot3( DataX , Constituent , Station):
     import seaborn as sns
 
@@ -294,7 +300,8 @@ def AnaVSPot3( DataX , Constituent , Station):
     
     
     if DataX[Constituent].sum() == 0:
-        return  "No data here"  
+        import pandas as pd
+        return  pd.DataFrame({'A' : []}) , pd.DataFrame({'A' : []}) 
     else:
     
 
@@ -311,11 +318,7 @@ def AnaVSPot3( DataX , Constituent , Station):
         stats = DataX [[ Constituent , 'quarter']].groupby('quarter').describe()
         stats2 = DataX [[ Constituent ]].describe()
         stats3 = DataX [[ Constituent , 'YearQuart']].groupby('YearQuart').describe()
-        return  stats , stats2 , stats3
+        return  stats.round(decimals=2) , stats2.round(decimals=2) , stats3.round(decimals=2)
         
         
         return  'Boxplot of Ambient '+Constituent+' by year and quarter'+ ' ('+Station+')'  
-
-
-
-     

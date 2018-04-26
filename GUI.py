@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Mar 27 09:16:05 2018
-
 @author: amirreza.sharifi
 """
 
@@ -48,43 +47,56 @@ def f(Constituent,Station,PlotType):
     
     elif PlotType == "Boxplots by month":
         stats1 , stats2 =graph2(Data , Station, Constituent  )
-        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
-        display(HTML(text))
-        display(HTML(stats1.to_html()))
-        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
-        display(HTML(text))
-        display(HTML(stats2.to_html()))
+        if stats1.empty:
+            display(HTML('<h1>No data here</h1>'))
+        else:
+            text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
+            display(HTML(text))
+            display(HTML(stats1.to_html()))
+            text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
+            display(HTML(text))
+            display(HTML(stats2.to_html()))
     
     elif PlotType == "Boxplots by station":
         stats1 , stats2 = graph3(Data , Station, Constituent  )
-        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
-        display(HTML(text))
-        display(HTML(stats1.to_html()))
-        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
-        display(HTML(text))
-        display(HTML(stats2.to_html()))
+        if stats1.empty:
+            display(HTML('<h1>No data here</h1>'))
+        else:        
+            
+            text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
+            display(HTML(text))
+            display(HTML(stats1.to_html()))
+            text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
+            display(HTML(text))
+            display(HTML(stats2.to_html()))
     
     elif PlotType == "Boxplots by year":
         stats1 , stats2 =graph4(Data , Station, Constituent  )
-        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
-        display(HTML(text))
-        display(HTML(stats1.to_html()))
-        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
-        display(HTML(text))
-        display(HTML(stats2.to_html()))
+        if stats1.empty:
+            display(HTML('<h1>No data here</h1>'))
+        else:        
+            
+            text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
+            display(HTML(text))
+            display(HTML(stats1.to_html()))
+            text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
+            display(HTML(text))
+            display(HTML(stats2.to_html()))
     
     elif PlotType == "Boxplots by Quarter":
         stats1 , stats2 , stats3 = AnaVSPot3( DataX , Constituent , Station) 
-        
-        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
-        display(HTML(text))
-        display(HTML(stats1.to_html()))
-        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
-        display(HTML(text))
-        display(HTML(stats2.to_html()))
-#        text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')(extrended breakdown)</h1>'
-#        display(HTML(text))
-#        display(HTML(stats3.to_html()))  
+        if stats1.empty:
+            display(HTML('<h1>No data here</h1>'))
+        else:        
+            text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
+            display(HTML(text))
+            display(HTML(stats1.to_html()))
+            text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
+            display(HTML(text))
+            display(HTML(stats2.to_html()))
+#            text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')(extrended breakdown)</h1>'
+#            display(HTML(text))
+#            display(HTML(stats3.to_html()))  
     
     elif PlotType == "Draw Scatterplot (A vs P)":
         text =AnaVSPot2( DataX , Constituent , Station)    
@@ -102,10 +114,4 @@ interact_manual(f, Station = ["All stations" , "ANA01", "ANA08", "ANA14", "ANA21
 
 
 
-#f("E.coli","ANA01","CDF and Histograms")
-
-
-
-
-
-
+#f("Total Phosphorus","All stations","Boxplots by month")
