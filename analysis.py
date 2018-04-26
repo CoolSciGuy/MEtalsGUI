@@ -131,12 +131,11 @@ def graph(Data , Station, Constituent ):
         
         stats = '10th Pi = ' + str(round(tenthP,2)) + ', 25th Pi = ' + str(round(twentyfifthP,2)) +', Median = ' + str(round(fiftiethP,2)) +', 75th Pi = ' + str(round(SeventyFifthP,2)) +', 90th Pi = ' + str(round(NintiethP,2)) +', Average = ' + str(round(Average,2))  
         #return  'Distribution of Ambient '+Constituent+' data' + ' ('+Station+')' 
-        return stats
-
-
         
+        return stats
+#grouping all data by month        
 def graph2(Data , Station, Constituent ):
-    #grouping all data by month
+    
 
     Unit= ""
     Unit =  units(Constituent,Unit)
@@ -160,9 +159,14 @@ def graph2(Data , Station, Constituent ):
         plt.title('Boxplot of Ambient '+Constituent+' over months' + ' ('+Station+')')
         plt.gcf().autofmt_xdate()
         plt.show()
-        return  'Boxplot of Ambient '+Constituent+' over months' + ' ('+Station+')' 
+        
+        stats = DataX [[ Constituent , 'months2']].groupby('months2').describe()
+        stats2 = DataX [[ Constituent ]].describe()
+            
+        return  stats , stats2
+        #return  'Boxplot of Ambient '+Constituent+' over months' + ' ('+Station+')' 
 
-
+    #grouping all data by station
 def graph3(Data , Station, Constituent  ):
 
     
@@ -181,7 +185,7 @@ def graph3(Data , Station, Constituent  ):
     if DataX[Constituent].sum() == 0:
         return  "No data here" 
     else:
-    #grouping all data by station
+
         if Station =='All stations' or Station =='All Anacostia' or Station =='All Potomac':
             DataX.boxplot(column = [Constituent],by='Station' , figsize = (15,6),showfliers=showflier)
             plt.ylabel(Constituent+Unit )
@@ -190,14 +194,19 @@ def graph3(Data , Station, Constituent  ):
             plt.title('Boxplot of Ambient '+Constituent+' by station')
             plt.gcf().autofmt_xdate()
             plt.show()
-            return  'Boxplot of Ambient '+Constituent+' by station'
+            
+            stats = DataX [[ Constituent , 'Station']].groupby('Station').describe()
+            stats2 = DataX [[ Constituent ]].describe()
+            
+            return  stats , stats2
+            #return  'Boxplot of Ambient '+Constituent+' by station'
         else:
             return  "Option not available , select (All stations) or (All potomac) to activate"
 
 
-
-def graph4(Data , Station, Constituent ):
     #grouping all data by year
+def graph4(Data , Station, Constituent ):
+
 
     Unit= ""
     Unit =  units(Constituent,Unit)
@@ -220,7 +229,13 @@ def graph4(Data , Station, Constituent ):
         plt.title('Boxplot of Ambient '+Constituent+' by year'+ ' ('+Station+')')
         plt.gcf().autofmt_xdate()
         plt.show()
-        return     'Boxplot of Ambient '+Constituent+' by year'+ ' ('+Station+')'
+        
+        stats = DataX [[ Constituent , 'year']].groupby('year').describe()
+        stats2 = DataX [[ Constituent ]].describe()
+            
+        return  stats , stats2 #'Boxplot of Ambient '+Constituent+' by station'
+        
+        #return     'Boxplot of Ambient '+Constituent+' by year'+ ' ('+Station+')'
             
             
 

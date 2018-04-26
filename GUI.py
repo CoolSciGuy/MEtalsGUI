@@ -12,7 +12,7 @@ Created on Tue Mar 27 09:16:05 2018
 from __future__ import print_function
 from ipywidgets import interact, interactive, fixed, interact_manual
 import ipywidgets as widgets
-from IPython.display import display
+from IPython.display import display , HTML
 
 
 
@@ -51,8 +51,13 @@ def f(Constituent,Station,PlotType):
         text = graph3(Data , Station, Constituent  )
         display(text)
     elif PlotType == "Boxplots by year":
-        text =graph4(Data , Station, Constituent  )
-        display(text)
+        stats1 , stats2 =graph4(Data , Station, Constituent  )
+        text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
+        display(HTML(text))
+        display(HTML(stats1.to_html()))
+        text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
+        display(HTML(text))
+        display(HTML(stats2.to_html()))
     elif PlotType == "Boxplots by Quarter":
         text =AnaVSPot3( DataX , Constituent , Station) 
         display(text)
@@ -71,7 +76,7 @@ interact_manual(f, Station = ["All stations" , "ANA01", "ANA08", "ANA14", "ANA21
 
 
 
-#f("E.coli","ANA01","Draw Scatterplot (A vs P)")
+#f("E.coli","ANA01","CDF and Histograms")
 
 
 
