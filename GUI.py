@@ -48,38 +48,38 @@ def f(Constituent,Station,PlotType):
     
     elif PlotType == "Boxplots by month":
         stats1 , stats2 =graph2(Data , Station, Constituent  )
-        text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
+        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
         display(HTML(text))
         display(HTML(stats1.to_html()))
-        text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
+        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
         display(HTML(text))
         display(HTML(stats2.to_html()))
     
     elif PlotType == "Boxplots by station":
         stats1 , stats2 = graph3(Data , Station, Constituent  )
-        text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
+        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
         display(HTML(text))
         display(HTML(stats1.to_html()))
-        text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
+        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
         display(HTML(text))
         display(HTML(stats2.to_html()))
     
     elif PlotType == "Boxplots by year":
         stats1 , stats2 =graph4(Data , Station, Constituent  )
-        text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
+        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
         display(HTML(text))
         display(HTML(stats1.to_html()))
-        text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
+        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
         display(HTML(text))
         display(HTML(stats2.to_html()))
     
     elif PlotType == "Boxplots by Quarter":
         stats1 , stats2 , stats3 = AnaVSPot3( DataX , Constituent , Station) 
         
-        text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
+        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')</h1>'
         display(HTML(text))
         display(HTML(stats1.to_html()))
-        text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
+        text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
         display(HTML(text))
         display(HTML(stats2.to_html()))
 #        text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')(extrended breakdown)</h1>'
