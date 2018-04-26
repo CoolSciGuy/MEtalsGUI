@@ -121,8 +121,19 @@ def graph(Data , Station, Constituent ):
         plt.grid(True)
         plt.show()
         plt.rcParams.update({'font.size': 12})
-        return  'Distribution of Ambient '+Constituent+' data' + ' ('+Station+')' 
         
+        tenthP = np.nanpercentile(Data2,10)
+        twentyfifthP = np.nanpercentile(Data2,25)
+        fiftiethP = np.nanpercentile(Data2,50)
+        SeventyFifthP = np.nanpercentile(Data2,75)
+        NintiethP = np.nanpercentile(Data2,90)
+        Average = np.average(Data2)
+        
+        stats = '10th Pi = ' + str(round(tenthP,2)) + ', 25th Pi = ' + str(round(twentyfifthP,2)) +', Median = ' + str(round(fiftiethP,2)) +', 75th Pi = ' + str(round(SeventyFifthP,2)) +', 90th Pi = ' + str(round(NintiethP,2)) +', Average = ' + str(round(Average,2))  
+        #return  'Distribution of Ambient '+Constituent+' data' + ' ('+Station+')' 
+        return stats
+
+
         
 def graph2(Data , Station, Constituent ):
     #grouping all data by month
@@ -289,4 +300,18 @@ def AnaVSPot3( DataX , Constituent , Station):
         plt.ylabel(Constituent+Unit)
         plt.show() 
         return  'Boxplot of Ambient '+Constituent+' by year and quarter'+ ' ('+Station+')'  
-           
+
+
+
+class DictTable(dict):
+    # Overridden dict class which takes a dict in the form {'a': 2, 'b': 3},
+    # and renders an HTML Table in IPython Notebook.
+    def _repr_html_(self):
+        html = ["<table width=100%>"]
+        for key, value in self.iteritems():
+            html.append("<tr>")
+            html.append("<td>{0}</td>".format(key))
+            html.append("<td>{0}</td>".format(value))
+            html.append("</tr>")
+        html.append("</table>")
+        return ''.join(html)           
