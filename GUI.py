@@ -21,7 +21,7 @@ import pandas as pd
 
 
 #---------------------read data-------------------------------------------------------------
-Data = pd.read_csv('ambient.csv')
+Data = pd.read_csv('ambient2.csv')
 Data['Date'] = pd.to_datetime(Data['Date'])
 Data.index = Data['Date']
 del Data['Date']
@@ -46,7 +46,7 @@ def f(Constituent,Station,PlotType):
         display(text)
     
     elif PlotType == "Boxplots by month":
-        stats1 , stats2 =graph2(Data , Station, Constituent  )
+        stats1 , stats2 , stats3 =graph2(Data , Station, Constituent  )
         if stats1.empty:
             display(HTML('<h1>No data here</h1>'))
         else:
@@ -56,9 +56,13 @@ def f(Constituent,Station,PlotType):
             text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
             display(HTML(text))
             display(HTML(stats2.to_html()))
-    
+            text = '<h1>' + 'Statistics for Exceedence of ' + Constituent+ ' over DC water quality standards(' + Station + ')(whole period)</h1>'
+            display(HTML(text))
+            display(HTML(stats3.to_html()))
+            
+            
     elif PlotType == "Boxplots by station":
-        stats1 , stats2 = graph3(Data , Station, Constituent  )
+        stats1 , stats2 , stats3= graph3(Data , Station, Constituent  )
         if stats1.empty:
             display(HTML('<h1>No data here</h1>'))
         else:        
@@ -69,9 +73,12 @@ def f(Constituent,Station,PlotType):
             text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
             display(HTML(text))
             display(HTML(stats2.to_html()))
+            text = '<h1>' + 'Statistics for Exceedence of ' + Constituent+ ' over DC water quality standards(' + Station + ')(whole period)</h1>'
+            display(HTML(text))
+            display(HTML(stats3.to_html()))
     
     elif PlotType == "Boxplots by year":
-        stats1 , stats2 =graph4(Data , Station, Constituent  )
+        stats1 , stats2 , stats3 =graph4(Data , Station, Constituent  )
         if stats1.empty:
             display(HTML('<h1>No data here</h1>'))
         else:        
@@ -82,6 +89,9 @@ def f(Constituent,Station,PlotType):
             text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
             display(HTML(text))
             display(HTML(stats2.to_html()))
+            text = '<h1>' + 'Statistics for Exceedence of ' + Constituent+ ' over DC water quality standards(' + Station + ')(whole period)</h1>'
+            display(HTML(text))
+            display(HTML(stats3.to_html()))
     
     elif PlotType == "Boxplots by Quarter":
         stats1 , stats2 , stats3 = AnaVSPot3( DataX , Constituent , Station) 
@@ -94,9 +104,9 @@ def f(Constituent,Station,PlotType):
             text = '<h1>' + 'Descriptive Statistics for ' + Constituent+ ' (' + Station + ')(whole period)</h1>'
             display(HTML(text))
             display(HTML(stats2.to_html()))
-#            text = '<h1>' + 'Discriptive Statistics for ' + Constituent+ ' (' + Station + ')(extrended breakdown)</h1>'
-#            display(HTML(text))
-#            display(HTML(stats3.to_html()))  
+            text = '<h1>' + 'Statistics for Exceedence of ' + Constituent+ ' over DC water quality standards(' + Station + ')(whole period)</h1>'
+            display(HTML(text))
+            display(HTML(stats3.to_html()))
     
     elif PlotType == "Draw Scatterplot (A vs P)":
         text =AnaVSPot2( DataX , Constituent , Station)    
@@ -110,8 +120,8 @@ def f(Constituent,Station,PlotType):
 interact_manual(f, Station = ["All stations" , "ANA01", "ANA08", "ANA14", "ANA21", "ANA29","All Anacostia" , "PMS01" , "PMS10", "PMS21", "PMS29" , "All Potomac"] ,\
          Constituent=["E.coli",	"Nitrite"	,"Ammonia"	,	"BOD5"	,"TSS",	"Chlorophyll a"		,"Hardness"	,"Alkalinity"	,"Turbidity",	"Dissolved Oxygen"	,	"Temperature"	,"pH",	"Seechi Depth","Cadmium"	,"Chromium",	"Copper",	"Iron"	,"Lead",	"Mercury",	"Zinc"	,"Arsenic",	"Selenium",	"Phytoplankton",	"Zooplankton","Total Phosphorus"	,"Total Soluble Phosphorus",	"Ortho-Phosphorus","Phaeophytin a"],\
          PlotType = ["Boxplots by year","Boxplots by month","Boxplots by station","Boxplots by Quarter","CDF and Histograms","Draw Boxplot (A vs P)","Draw Scatterplot (A vs P)"])
-
+#
 
 
 #get_ipython().run_line_magic('matplotlib', 'tk') 
-#f("pH","All stations","Draw Scatterplot (A vs P)")
+#f("E.coli","All Anacostia","Boxplots by station")

@@ -203,6 +203,7 @@ def graph(Data , Station, Constituent ):
         #return  'Distribution of Ambient '+Constituent+' data' + ' ('+Station+')' 
         
         return stats
+
 #grouping all data by month        
 def graph2(Data , Station, Constituent ):
     
@@ -239,10 +240,16 @@ def graph2(Data , Station, Constituent ):
         
         plt.show()
         
+        
+
+        
         stats = DataX [[ Constituent , 'months2']].groupby('months2').describe()
         stats2 = DataX [[ Constituent ]].describe()
-            
-        return  stats.round(decimals=2) , stats2.round(decimals=2)
+        
+        Violation = DataX[DataX[Constituent].gt(Unit[2])]             
+        stats3 = Violation[[ Constituent , 'months2']].groupby('months2').describe()
+        stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
+        return  stats.round(decimals=2) , stats2.round(decimals=2)   , stats3.round(decimals=2) 
         
 
 #grouping all data by station
@@ -279,11 +286,22 @@ def graph3(Data , Station, Constituent  ):
             plt.axhline(y=Unit[2], color='r', linestyle=':') 
         plt.show()
         
+        
+
+
+        
         stats = DataX [[ Constituent , 'Station']].groupby('Station').describe()
         stats2 = DataX [[ Constituent ]].describe()
+
+
+        Violation = DataX[DataX[Constituent].gt(Unit[2])] 
+        stats3 = Violation[[ Constituent , 'Station']].groupby('Station').describe()
         
-        return  stats.round(decimals=2) , stats2.round(decimals=2)
+        stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
         
+
+            
+        return  stats.round(decimals=2) , stats2.round(decimals=2)   , stats3.round(decimals=2)        
 
 
 
@@ -293,7 +311,7 @@ def graph4(Data , Station, Constituent ):
 
     Unit= ""
     Unit =  units(Constituent )
-    showflier = True  #outliers
+    showflier = False  #outliers
     DataX = Data    
     if Station =='All Anacostia':
         DataX=Data[(Data['Watershed'] == "Anacostia")]
@@ -319,9 +337,16 @@ def graph4(Data , Station, Constituent ):
         plt.show()
         
         stats = DataX [[ Constituent , 'year']].groupby('year').describe()
-        stats2 = DataX [[ Constituent ]].describe()
+        stats2 = DataX [[ Constituent ]].describe()        
+        
+        Violation = DataX[DataX[Constituent].gt(Unit[2])] 
+        stats3 = Violation[[ Constituent , 'year']].groupby('year').describe()
+        
+        stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
+        
+
             
-        return  stats.round(decimals=2) , stats2.round(decimals=2)  
+        return  stats.round(decimals=2) , stats2.round(decimals=2)   , stats3.round(decimals=2)
             
             
 
@@ -417,8 +442,16 @@ def AnaVSPot3( DataX , Constituent , Station):
  
         stats = DataX [[ Constituent , 'quarter']].groupby('quarter').describe()
         stats2 = DataX [[ Constituent ]].describe()
-        stats3 = DataX [[ Constituent , 'YearQuart']].groupby('YearQuart').describe()
-        return  stats.round(decimals=2) , stats2.round(decimals=2) , stats3.round(decimals=2)
+#        stats3 = DataX [[ Constituent , 'YearQuart']].groupby('YearQuart').describe()
+
+        Violation = DataX[DataX[Constituent].gt(Unit[2])]             
+        stats3 = Violation[[ Constituent , 'quarter']].groupby('quarter').describe()
+        stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
         
         
-        return  'Boxplot of Ambient '+Constituent+' by year and quarter'+ ' ('+Station+')'  
+        return  stats.round(decimals=2) , stats2.round(decimals=2)   , stats3.round(decimals=2)         
+        
+        
+
+        
+        
