@@ -7,150 +7,25 @@ Code modified on 03-05-18 to work better with datasets that have nan values.
 
 
 
-
 import numpy as np
 import matplotlib.pyplot as plt
 
-def units(Constituent):
-    thresholdmin = 0
-    thresholdmax = 0
-    if Constituent == 'Turbidity': 
-        Unit = ' (NTU)' 
-        thresholdmax = 20   #Turbidity increase above ambient (NTU) 
-        
-        Class = "A,B,C"  #done
-    elif Constituent == 'E.coli':
-        Unit = ' (MPN/100 ml)'  
-        thresholdmax = 410      #done
-        Class = "A"
-    elif Constituent == 'Nitrite':
-        Unit = ' (mg/lit)'
-        thresholdmax = 0        
-        Class = "NA"   #not in DC standard
-    elif Constituent == 'Ammonia':
-        Unit = ' (mg/lit)'
-        thresholdmax = 0     
-        Class = "C,D"    #complicated, revisit later
-    elif Constituent == 'Total Phosphorus':
-        Unit = ' (mg/lit)'
-        thresholdmax = 0     
-        Class = "NA"
-    elif Constituent == 'Total Soluble Phosphorus':
-        Unit = ' (mg/lit)'
-        thresholdmax = 0     
-        Class = "NA"
-    elif Constituent == 'Ortho-Phosphorus':
-        Unit = ' (mg/lit)'
-        thresholdmax = 0     
-        Class = "NA"
-    elif Constituent == 'BOD5':
-        Unit = ' (mg/lit)'
-        thresholdmax = 0     
-        Class = "NA"
-    elif Constituent == 'TSS':
-        Unit = ' (mg/lit)'
-        thresholdmax = 0     
-        Class = "NA"
-    elif Constituent == 'Chlorophyll a':
-        Unit = ' (mg/m3)'
-        thresholdmax = 25     
-        Class = "C" #done
-    elif Constituent == 'Phaeophytin a':
-        Unit = ' (mg/lit)'
-        thresholdmax = 0     
-        Class = "NA"
-    elif Constituent == 'Hardness':
-        Unit = ' (mg/lit)'
-        thresholdmax = 0     
-        Class = "NA"
-    elif Constituent == 'Alkalinity':
-        Unit = ' (mg/lit)' 
-        thresholdmax = 0     
-        Class = "NA"
-    elif Constituent == 'Dissolved Oxygen':
-        Unit = ' (mg/lit)'
-        thresholdmin = 5     
-        Class = "C" # done
-    elif Constituent == 'Cadmium':
-        Unit = ' (µg/lit)'
-        thresholdmax = 0     
-        Class = "NA"
-    elif Constituent == 'Chromium':
-        Unit = ' (µg/lit)'
-        thresholdmax = 0     
-        Class = "NA"          
-    elif Constituent == 'Copper':
-        Unit = ' (µg/lit)' 
-        thresholdmax = 0     
-        Class = "NA" 
-    elif Constituent == 'Iron':
-        Unit = ' (µg/lit)'
-        thresholdmax = 0     
-        Class = "NA" 
-    elif Constituent == 'Lead':
-        Unit = ' (µg/lit)'
-        thresholdmax = 0     
-        Class = "NA" 
-    elif Constituent == 'Mercury':
-        Unit = ' (µg/lit)'  
-        thresholdmax = 0     
-        Class = "NA" 
-    elif Constituent == 'Zinc':
-        Unit = ' (µg/lit)'    
-        thresholdmax = 0     
-        Class = "NA" 
-    elif Constituent == 'Arsenic':
-        Unit = ' (µg/lit)'
-        thresholdmax = 0     
-        Class = "NA" 
-        
-    elif Constituent == 'Selenium':
-        Unit = ' (µg/lit)'
-        thresholdmax = 0     
-        Class = "NA" 
-    elif Constituent == 'Phytoplankton':
-        Unit = ' (# of individuals/ml)' 
-        thresholdmax = 0     
-        Class = "NA" 
-    elif Constituent == 'Zooplankton':
-        Unit = ' (# of individuals/ml)' 
-        thresholdmax = 0     
-        Class = "NA" 
-    elif Constituent == 'Temperature':
-        Unit = ' (°Celsius)'
-        thresholdmax = 32.2     
-        Class = "C" #done 
-    elif Constituent == 'pH':
-        Unit = ' (pH units)'
-        thresholdmin = 6
-        thresholdmax = 8.5
-        Class = "A,B,C" # done 
-    elif Constituent == 'Seechi Depth':
-        Unit = ' (meters)' 
-        thresholdmin = 0.8     
-        Class = "C"  #done
-    return Unit  , thresholdmin, thresholdmax  ,Class
-
-    
-    
-    
+from analysis2 import units, data
 
 
 
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 #CDF and Histogram
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 def graph(Data , Station, Constituent ):
     
     Unit= ""
     Unit =  units(Constituent )
-    DataX=Data
-    if Station =='All Anacostia':
-        DataX=Data[(Data['Watershed'] == "Anacostia")]
-    elif Station =='All Potomac':
-        DataX = Data[(Data['Watershed'] == "Potomac")] 
-    elif Station !='All stations' and Station !='All Anacostia' and Station !='All Potomac':
-        DataX =  Data[(Data['Station'] == Station)]  
-    
-    #resample the dataset
+    Data= Data.dropna(subset = [Constituent])
+
+    DataX = data(Data , Station)
+     
     Data2 = DataX[Constituent].as_matrix() #matrix
     Data2=Data2[~np.isnan(Data2)]
     
@@ -158,8 +33,6 @@ def graph(Data , Station, Constituent ):
     if Data2.sum() == 0:
         return  "No data here" 
          
-    
-
     else:        
         
         #CDF and Histogram
@@ -204,28 +77,22 @@ def graph(Data , Station, Constituent ):
         
         return stats
 
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 #grouping all data by month        
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 def graph2(Data , Station, Constituent ):
     
 
     Unit= ""
-
-    Unit =  units(Constituent )
-    
+    Unit =  units(Constituent )    
     showflier = False  #outliers
-    DataX=Data
+    Data= Data.dropna(subset = [Constituent]) 
+    DataX = data(Data , Station)
     
-    if Station =='All Anacostia':
-        DataX=Data[(Data['Watershed'] == "Anacostia")]
-    elif Station =='All Potomac':
-        DataX = Data[(Data['Watershed'] == "Potomac")] 
-    elif Station !='All stations' and Station !='All Anacostia' and Station !='All Potomac':
-        DataX =  Data[(Data['Station'] == Station)] 
-
     if DataX[Constituent].sum() == 0:
         import pandas as pd
         return  pd.DataFrame({'A' : []}) , pd.DataFrame({'A' : []}) 
-
     else:
         DataX.boxplot(column = [Constituent],by='months2' , figsize = (15,6),showfliers=showflier)
         plt.ylabel(Constituent+Unit[0])
@@ -236,23 +103,21 @@ def graph2(Data , Station, Constituent ):
         if Unit[1]!=0:
             plt.axhline(y=Unit[1], color='r', linestyle=':')
         if Unit[2]!=0:
-            plt.axhline(y=Unit[2], color='r', linestyle=':')           
-        
-        plt.show()
-        
-        
-
-        
+            plt.axhline(y=Unit[2], color='r', linestyle=':')                   
+        plt.show()        
+               
         stats = DataX [[ Constituent , 'months2']].groupby('months2').describe()
         stats2 = DataX [[ Constituent ]].describe()
         
         Violation = DataX[DataX[Constituent].gt(Unit[2])]             
-        stats3 = Violation[[ Constituent , 'months2']].groupby('months2').describe()
-        stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
-        return  stats.round(decimals=2) , stats2.round(decimals=2)   , stats3.round(decimals=2) 
+        #stats3 = Violation[[ Constituent , 'months2']].groupby('months2').describe()
+        #stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
+        return  stats.round(decimals=2) , stats2.round(decimals=2)   #, stats3.round(decimals=2) 
         
-
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 #grouping all data by station
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        
 def graph3(Data , Station, Constituent  ):
 
     
@@ -260,13 +125,9 @@ def graph3(Data , Station, Constituent  ):
     Unit =  units(Constituent )
     showflier = False  #outliers
 
-    DataX=Data
-    if Station =='All Anacostia':
-        DataX=Data[(Data['Watershed'] == "Anacostia")]
-    elif Station =='All Potomac':
-        DataX = Data[(Data['Watershed'] == "Potomac")] 
-    elif Station !='All stations' and Station !='All Anacostia' and Station !='All Potomac':
-        DataX =  Data[(Data['Station'] == Station)]     
+    Data= Data.dropna(subset = [Constituent]) 
+    DataX = data(Data , Station)
+
 
     if DataX[Constituent].sum() == 0:
         import pandas as pd
@@ -286,48 +147,45 @@ def graph3(Data , Station, Constituent  ):
             plt.axhline(y=Unit[2], color='r', linestyle=':') 
         plt.show()
         
-        
-
-
-        
         stats = DataX [[ Constituent , 'Station']].groupby('Station').describe()
         stats2 = DataX [[ Constituent ]].describe()
 
-
         Violation = DataX[DataX[Constituent].gt(Unit[2])] 
-        stats3 = Violation[[ Constituent , 'Station']].groupby('Station').describe()
+#        stats3 = Violation[[ Constituent , 'Station']].groupby('Station').describe()
         
-        stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
+#        stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
         
 
             
-        return  stats.round(decimals=2) , stats2.round(decimals=2)   , stats3.round(decimals=2)        
+        return  stats.round(decimals=2) , stats2.round(decimals=2)   #, stats3.round(decimals=2)        
 
 
-
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 #grouping all data by year
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 def graph4(Data , Station, Constituent ):
 
 
     Unit= ""
     Unit =  units(Constituent )
     showflier = False  #outliers
-    DataX = Data    
-    if Station =='All Anacostia':
-        DataX=Data[(Data['Watershed'] == "Anacostia")]
-    elif Station =='All Potomac':
-        DataX = Data[(Data['Watershed'] == "Potomac")] 
-    elif Station !='All stations' and Station !='All Anacostia' and Station !='All Potomac':
-        DataX =  Data[(Data['Station'] == Station)] 
+    Data = Data.dropna(subset = [Constituent])  
+    DataX = data(Data , Station)
+    
+
 
     if DataX[Constituent].sum() == 0:
         import pandas as pd
         return  pd.DataFrame({'A' : []}) , pd.DataFrame({'A' : []}) 
     else:
-        DataX.boxplot(column = [Constituent],by='year' , figsize = (15,6),showfliers=showflier)
+        ax=DataX.boxplot(column = [Constituent],by='year' , figsize = (15,6),showfliers=showflier)
         plt.ylabel(Constituent+Unit[0])
         plt.suptitle("")
         plt.xlabel('Years, n = ' + str(DataX[Constituent].count()))
+        
+
+        
         plt.title('Boxplot of Ambient '+Constituent+' by year'+ ' ('+Station+')')
         plt.gcf().autofmt_xdate()
         if Unit[1]!=0:
@@ -340,21 +198,23 @@ def graph4(Data , Station, Constituent ):
         stats2 = DataX [[ Constituent ]].describe()        
         
         Violation = DataX[DataX[Constituent].gt(Unit[2])] 
-        stats3 = Violation[[ Constituent , 'year']].groupby('year').describe()
+#        stats3 = Violation[[ Constituent , 'year']].groupby('year').describe()
         
-        stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
+#        stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
         
 
             
-        return  stats.round(decimals=2) , stats2.round(decimals=2)   , stats3.round(decimals=2)
+        return  stats.round(decimals=2) , stats2.round(decimals=2)  # , stats3.round(decimals=2)
             
             
-
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Potomac vs. Anacostia barplot
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------        
 def AnaVSPot( DataX , Constituent , Station):
     import seaborn as sns
     
-    
+    Data= DataX.dropna(subset = [Constituent]) 
+    DataX=Data
     #error if there is no data
     if DataX[Constituent].sum() == 0:
         return  "No data here"  
@@ -378,12 +238,15 @@ def AnaVSPot( DataX , Constituent , Station):
         return 'Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)'
 
             
-            
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------           
 #Potomac vs. Anacostia scatterplot
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        
 def AnaVSPot2( DataX , Constituent , Station ):
     import seaborn as sns
     
-    
+    Data= DataX.dropna(subset = [Constituent]) 
+    DataX=Data
     #error if there is no data
     if DataX[Constituent].sum() == 0:
         return  "No data here" 
@@ -404,20 +267,19 @@ def AnaVSPot2( DataX , Constituent , Station ):
             plt.axhline(y=Unit[2], color='r', linestyle=':')        
         plt.show()   
         return 'Scatterplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)'   
- 
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------- 
 # this function draws barplots seperated by year and quarter
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        
+    
 def AnaVSPot3( DataX , Constituent , Station):
     import seaborn as sns
 
     
-    #error if there is no data
-    if Station =='All Anacostia':
-        DataX=DataX[(DataX['Watershed'] == "Anacostia")]
-    elif Station =='All Potomac':
-        DataX = DataX[(DataX['Watershed'] == "Potomac")] 
-    elif Station !='All stations' and Station !='All Anacostia' and Station !='All Potomac':
-        DataX =  DataX[(DataX['Station'] == Station)]  
-    
+    Data= DataX.dropna(subset = [Constituent]) 
+    DataX = data(Data , Station)
     
     
     if DataX[Constituent].sum() == 0:
@@ -430,7 +292,8 @@ def AnaVSPot3( DataX , Constituent , Station):
         Unit =  units(Constituent )
         plt.figure(3, figsize = (20,12))
         plt.rcParams.update({'font.size': 16})
-        sns.boxplot(x="year", y= Constituent, hue="quarter", data=DataX,showfliers=False )    
+        ax = sns.boxplot(x="year", y= Constituent, hue="quarter", data=DataX,showfliers=False )    
+        ax.set_xticklabels(ax.get_xticklabels(),rotation=90)
         plt.title('Boxplot of Ambient '+Constituent+' by year and quarter'+ ' ('+Station+')')
         plt.ylabel(Constituent+Unit[0])
         if Unit[1]!=0:
@@ -444,14 +307,49 @@ def AnaVSPot3( DataX , Constituent , Station):
         stats2 = DataX [[ Constituent ]].describe()
 #        stats3 = DataX [[ Constituent , 'YearQuart']].groupby('YearQuart').describe()
 
-        Violation = DataX[DataX[Constituent].gt(Unit[2])]             
-        stats3 = Violation[[ Constituent , 'quarter']].groupby('quarter').describe()
-        stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
+#        Violation = DataX[DataX[Constituent].gt(Unit[2])]             
+#        stats3 = Violation[[ Constituent , 'quarter']].groupby('quarter').describe()
+#        stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
         
-        
-        return  stats.round(decimals=2) , stats2.round(decimals=2)   , stats3.round(decimals=2)         
+        return  stats.round(decimals=2) , stats2.round(decimals=2)  # , stats3.round(decimals=2)         
         
         
 
         
-        
+def AnaVSPot4( DataX , Constituent , Station):
+    import seaborn as sns
+    
+    
+    Data= DataX.dropna(subset = [Constituent]) 
+    DataX=Data
+    
+    
+    #error if there is no data
+    if DataX[Constituent].sum() == 0:
+        return  "No data here"  
+    else:
+    
+        if Station[0] =='All Stations':
+            DataX=Data
+
+        else:
+            
+#            DataX = Data[(Data['Watershed'] == "Anacostia Mainstem")]     
+            DataX =DataX[DataX['Watershed'].isin(Station)]
+            
+        Unit = ""
+        Unit =  units(Constituent )
+        plt.figure(3, figsize = (12,12))
+        plt.rcParams.update({'font.size': 16})
+        plt.title('Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)')
+        ax = sns.boxplot(x="year", y= Constituent, hue="Watershed", data=DataX ,showfliers=False)    
+        ax.set_xticklabels(ax.get_xticklabels(),rotation=90)
+        plt.ylabel(Constituent+Unit[0])
+        if Unit[1]!=0:
+            plt.axhline(y=Unit[1], color='r', linestyle=':')
+        if Unit[2]!=0:
+            plt.axhline(y=Unit[2], color='r', linestyle=':')        
+        plt.show()
+        return 'Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)'
+
+                    
