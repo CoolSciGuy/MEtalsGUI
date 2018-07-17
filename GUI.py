@@ -161,12 +161,12 @@ def f(Constituent,Station,PlotType):
 
 #
 #
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+#import sys
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 
 interact_manual(f, Station = ["All Stations" , 'Anacostia Mainstem', 'Anacostia Tributary' , 'Kingman Lake' , 'Potomac Mainstem' , "Potomac Tributary" , "Rock Creek" , "Rock Creek Tributary" , "Ship Channel" , "Tidal Basin" ] ,\
-         Constituent=["Escherichia coli",	"Total suspended solids",	"Arsenic" , "Lead" , "Cadmium" , "Chromium",'Copper','Iron','Lead','Mercury','Zinc'],\
+         Constituent=["Escherichia coli",	"Total suspended solids",	"Arsenic" , "Lead" , "Cadmium" , "Chromium",'Copper','Iron','Mercury','Zinc'],\
          PlotType = ["Boxplots by year","Boxplots by month","Boxplots by station","Boxplots by Quarter","CDF and Histograms"])
 
 

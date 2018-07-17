@@ -82,10 +82,10 @@ DataX = Data #needed when data is displayed by quarter
 PlotType = ""
 text = ""
 
-
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+#
+#import sys
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 
 
 def ff(i , j):
