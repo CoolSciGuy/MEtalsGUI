@@ -102,7 +102,7 @@ i=widgets.SelectMultiple(
     disabled=False)
  
 j=widgets.Select(
-    options=["Escherichia coli",	"Total suspended solids",	"Arsenic" , "Lead" , "Cadmium" , "Chromium"],
+    options=["Escherichia coli",	"Total suspended solids",	"Arsenic" , "Lead" , "Cadmium" , "Chromium",'Copper','Iron','Mercury','Zinc'],
     value='Escherichia coli',
     # rows=10,
     description='Constituent',
