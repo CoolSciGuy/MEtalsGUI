@@ -15,7 +15,8 @@ from IPython.display import display , HTML
 import numpy as np
 import os.path
 
-
+import warnings
+warnings.filterwarnings("always")
 #to avoid some random error
 
 
@@ -173,35 +174,7 @@ interact_manual(f, Station = ["All Stations" , 'Anacostia Mainstem', 'Anacostia 
 
 
 
-#def ff(i , j):
-#    text = AnaVSPot4( DataX , j , i) 
-#    display(text)
 
 
-#i=widgets.SelectMultiple(
-#    options=["All Stations" , 'Anacostia Mainstem', 'Anacostia Tributary' , 'Kingman Lake' , 'Potomac Mainstem' , "Potomac Tributary" , "Rock Creek" , "Rock Creek Tributary" , "Ship Channel" , "Tidal Basin" ],
-#    value=[ 'Anacostia Mainstem'],
-#    #rows=10,
-#    description='Stations',
-#    disabled=False)
-# 
-#j=widgets.Select(
-#    options=["Escherichia coli",	"Total suspended solids",	"Arsenic" , "Lead"],
-#    value='Escherichia coli',
-#    # rows=10,
-#    description='Constituent',
-#    disabled=False
-#)
-#
-#ui = widgets.HBox([i, j])
-#out =widgets.interactive_output(ff, {'i': i, 'j': j }  )
-#
-#
-#
-#display(ui, out)
-
-
-
-#
-#get_ipython().run_line_magic('matplotlib', 'tk') 
-#f("Arsenic","Rock Creek","Boxplots by month")
+##get_ipython().run_line_magic('matplotlib', 'tk') 
+#f("Lead","Anacostia Mainstem","Boxplots by month")

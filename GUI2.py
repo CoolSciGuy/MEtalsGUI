@@ -21,7 +21,8 @@ import ipywidgets as widgets
 from IPython.display import display , HTML
 import numpy as np
 import os.path
-
+import warnings
+warnings.filterwarnings("always")
 
 #to avoid some random error
 
@@ -98,7 +99,7 @@ def ff(i , j):
 
 i=widgets.SelectMultiple(
     options=["All Stations" , 'Anacostia Mainstem', 'Anacostia Tributary' , 'Kingman Lake' , 'Potomac Mainstem' , "Potomac Tributary" , "Rock Creek" , "Rock Creek Tributary" , "Ship Channel" , "Tidal Basin" , "Chain Bridge (USGS)"],
-    value=[ 'Anacostia Mainstem'],
+    value=[ 'Chain Bridge (USGS)'],
     #rows=10,
     description='Stations',
     disabled=False)
@@ -108,12 +109,10 @@ j=widgets.Select(
     value='Escherichia coli',
     # rows=10,
     description='Constituent',
-    disabled=False
-)
+    disabled=False)
 
 ui = widgets.HBox([i, j])
 out =widgets.interactive_output(ff, {'i': i, 'j': j }  )
-
 
 
 display(ui, out)
@@ -122,4 +121,4 @@ display(ui, out)
 
 #
 #get_ipython().run_line_magic('matplotlib', 'tk') 
-#f("Arsenic","Rock Creek","Boxplots by month")
+#ff("Escherichia coli","Chain Bridge (USGS)","Boxplots by month")
