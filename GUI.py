@@ -34,7 +34,7 @@ if os.path.isfile("allSorted.csv"):   #if the pivoted file exits, read it
 
 else:   #make a pivoted file
     
-    Data = pd.read_csv('all.csv')
+    Data = pd.read_csv('all+chain.csv')
     Data = Data.pivot_table( values = ['Result Value'], columns = 'Characteristic Name', index=['Station' , 'Date']).reset_index()
     Data['Date'] = pd.to_datetime(Data['Date'])
     Data.index = Data['Date']
@@ -55,8 +55,10 @@ else:   #make a pivoted file
     Condition7 = Data['Station'].isin(["TKV01",	"TLU01",	"TMH01",	"TPI01",	"TPO01",	"TPY01",	"TSO01"]) # Rock Creek Trib
     Condition8 = Data['Station'].isin(["PWC04"]) # Ship Channel
     Condition9 = Data['Station'].isin(["PTB01"]) # Tidal Basin
-    conditions = [Condition1 , Condition2,Condition3 , Condition4,Condition5 , Condition6, Condition7 , Condition8, Condition9]
-    choices = ['Anacostia Mainstem', 'Anacostia Tributary' , 'Kingman Lake' , 'Potomac Mainstem' , "Potomac Tributary" , "Rock Creek" , "Rock Creek Tributary" , "Ship Channel" , "Tidal Basin"   ]
+    Condition10 = Data['Station'].isin(["CHAIN"]) # USGS chain Bridge
+    
+    conditions = [Condition1 , Condition2,Condition3 , Condition4,Condition5 , Condition6, Condition7 , Condition8, Condition9,Condition10]
+    choices = ['Anacostia Mainstem', 'Anacostia Tributary' , 'Kingman Lake' , 'Potomac Mainstem' , "Potomac Tributary" , "Rock Creek" , "Rock Creek Tributary" , "Ship Channel" , "Tidal Basin"   , "Chain Bridge (USGS)"   ]
     Data['Watershed'] = np.select(conditions, choices)
 
 
@@ -165,7 +167,7 @@ def f(Constituent,Station,PlotType):
 #reload(sys)
 #sys.setdefaultencoding('utf8')
 
-interact_manual(f, Station = ["All Stations" , 'Anacostia Mainstem', 'Anacostia Tributary' , 'Kingman Lake' , 'Potomac Mainstem' , "Potomac Tributary" , "Rock Creek" , "Rock Creek Tributary" , "Ship Channel" , "Tidal Basin" ] ,\
+interact_manual(f, Station = ["All Stations" , 'Anacostia Mainstem', 'Anacostia Tributary' , 'Kingman Lake' , 'Potomac Mainstem' , "Potomac Tributary" , "Rock Creek" , "Rock Creek Tributary" , "Ship Channel" , "Tidal Basin"  , "Chain Bridge (USGS)"] ,\
          Constituent=["Escherichia coli",	"Total suspended solids",	"Arsenic" , "Lead" , "Cadmium" , "Chromium",'Copper','Iron','Mercury','Zinc'],\
          PlotType = ["Boxplots by year","Boxplots by month","Boxplots by station","Boxplots by Quarter","CDF and Histograms"])
 
