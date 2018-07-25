@@ -327,6 +327,8 @@ def AnaVSPot4( DataX , Constituent , Station):
     #error if there is no data
     if DataX[Constituent].sum() == 0:
         return  "No data here"  
+    
+    
     else:
     
         if Station[0] =='All Stations':
@@ -337,19 +339,23 @@ def AnaVSPot4( DataX , Constituent , Station):
 #            DataX = Data[(Data['Watershed'] == "Anacostia Mainstem")]     
             DataX =DataX[DataX['Watershed'].isin(Station)]
             
-        Unit = ""
-        Unit =  units(Constituent )
-        plt.figure(3, figsize = (12,12))
-        plt.rcParams.update({'font.size': 16})
-        plt.title('Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)')
-        ax = sns.boxplot(x="year", y= Constituent, hue="Watershed", data=DataX ,showfliers=False)    
-        ax.set_xticklabels(ax.get_xticklabels(),rotation=90)
-        plt.ylabel(Constituent+Unit[0])
-        if Unit[1]!=0:
-            plt.axhline(y=Unit[1], color='r', linestyle=':')
-        if Unit[2]!=0:
-            plt.axhline(y=Unit[2], color='r', linestyle=':')        
-        plt.show()
-        return 'Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)'
+            if DataX[Constituent].sum() == 0:
+                return  "No data here"
+            else:
+            
+                Unit = ""
+                Unit =  units(Constituent )
+                plt.figure(3, figsize = (12,12))
+                plt.rcParams.update({'font.size': 16})
+                plt.title('Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)')
+                ax = sns.boxplot(x="year", y= Constituent, hue="Watershed", data=DataX ,showfliers=False)    
+                ax.set_xticklabels(ax.get_xticklabels(),rotation=90)
+                plt.ylabel(Constituent+Unit[0])
+                if Unit[1]!=0:
+                    plt.axhline(y=Unit[1], color='r', linestyle=':')
+                if Unit[2]!=0:
+                    plt.axhline(y=Unit[2], color='r', linestyle=':')        
+                plt.show()
+                return 'Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)'
 
                     
