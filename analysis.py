@@ -351,6 +351,7 @@ def AnaVSPot4( DataX , Constituent , Station):
                 ax = sns.boxplot(x="year", y= Constituent, hue="Watershed", data=DataX ,showfliers=False)    
                 ax.set_xticklabels(ax.get_xticklabels(),rotation=90)
                 plt.ylabel(Constituent+Unit[0])
+                plt.xlabel('Years, n = ' + str(DataX[Constituent].count()))
                 if Unit[1]!=0:
                     plt.axhline(y=Unit[1], color='r', linestyle=':')
                 if Unit[2]!=0:
