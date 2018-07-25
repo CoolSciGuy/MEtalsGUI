@@ -15,9 +15,7 @@ from IPython.display import display , HTML
 import numpy as np
 import os.path
 
-import warnings
-warnings.filterwarnings("always")
-#to avoid some random error
+
 
 
 
