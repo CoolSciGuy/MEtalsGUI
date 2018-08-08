@@ -334,29 +334,35 @@ def AnaVSPot4( DataX , Constituent , Station):
         if Station[0] =='All Stations':
             DataX=Data
 
+        elif Station[0] in {"AAG01",	"AAG02",	"ANA01",	"ANA02",	"ANA03",	"ANA04",	"ANA05",	"ANA06",	"ANA07",	"ANA08",	"ANA09",	"ANA10",	"ANA11",	"ANA12",	"ANA13",	"ANA14",	"ANA15",	"ANA16",	"ANA17",	"ANA18",	"ANA19",	"ANA20",	"ANA21",	"ANA21 ",	"ANA22",	"ANA23",	"ANA24",	"ANA25",	"ANA26",	"ANA27",	"ANA29",	"ANA30" ,"TDU01",	"TFC01",	"TFD01",	"TFE01",	"TFS01",	"THR01",	"TNA01",	"TNS01",	"TOR01",	"TPB01",	"TTX27",	"TUT01",	"TWB01",	"TWB02",	"TWB03",	"TWB04",	"TWB05",	"TWB06" , "TFS01" ,"KNG01",	"KNG02" ,"PMS01",	"PMS02",	"PMS03",	"PMS05",	"PMS07",	"PMS08",	"PMS09",	"PMS10",	"PMS11",	"PMS12",	"PMS13",	"PMS16",	"PMS18",	"PMS21",	"PMS21 ",	"PMS23",	"PMS25",	"PMS27",	"PMS29",	"PMS31",	"PMS33",	"PMS35",	"PMS37",	"PMS39",	"PMS41",	"PMS44",	"PMS46",	"PMS48",	"PMS51" , "PMS52" ,"TBK01",	"TBR01", "TCO01", "TCO06" , "TDA01" , "TDO01" , "TFB01" , "TFB02","RCR01",	"RCR04","RCR07",	"RCR09" ,"TKV01""TLU01",	"TMH01",	"TPI01",	"TPO01",	"TPY01",	"TSO01" ,"PWC04"  ,"PTB01" ,"CHAIN"}:
+            DataX =DataX[DataX['Station'].isin(Station)]
+            
+            
+        
+        
         else:
             
-#            DataX = Data[(Data['Watershed'] == "Anacostia Mainstem")]     
+   
             DataX =DataX[DataX['Watershed'].isin(Station)]
             
             if DataX[Constituent].sum() == 0:
                 return  "No data here"
-            else:
             
-                Unit = ""
-                Unit =  units(Constituent )
-                plt.figure(3, figsize = (12,12))
-                plt.rcParams.update({'font.size': 16})
-                plt.title('Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)')
-                ax = sns.boxplot(x="year", y= Constituent, hue="Watershed", data=DataX ,showfliers=False)    
-                ax.set_xticklabels(ax.get_xticklabels(),rotation=90)
-                plt.ylabel(Constituent+Unit[0])
-                plt.xlabel('Years, n = ' + str(DataX[Constituent].count()))
-                if Unit[1]!=0:
-                    plt.axhline(y=Unit[1], color='r', linestyle=':')
-                if Unit[2]!=0:
-                    plt.axhline(y=Unit[2], color='r', linestyle=':')        
-                plt.show()
-                return 'Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)'
+            
+    Unit = ""
+    Unit =  units(Constituent )
+    plt.figure(3, figsize = (12,12))
+    plt.rcParams.update({'font.size': 16})
+    plt.title('Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)')
+    ax = sns.boxplot(x="year", y= Constituent, hue="Watershed", data=DataX ,showfliers=False)    
+    ax.set_xticklabels(ax.get_xticklabels(),rotation=90)
+    plt.ylabel(Constituent+Unit[0])
+    plt.xlabel('Years, n = ' + str(DataX[Constituent].count()))
+    if Unit[1]!=0:
+        plt.axhline(y=Unit[1], color='r', linestyle=':')
+    if Unit[2]!=0:
+        plt.axhline(y=Unit[2], color='r', linestyle=':')        
+    plt.show()
+    return 'Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)'
 
                     
