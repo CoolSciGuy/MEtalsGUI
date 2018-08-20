@@ -180,6 +180,7 @@ def graph4(Data , Station, Constituent ):
         return  pd.DataFrame({'A' : []}) , pd.DataFrame({'A' : []}) 
     else:
         ax=DataX.boxplot(column = [Constituent],by='year' , figsize = (30,12),showfliers=showflier)
+        plt.rcParams.update({'font.size': 22})
         plt.ylabel(Constituent+Unit[0])
         plt.suptitle("")
         plt.xlabel('Years, n = ' + str(DataX[Constituent].count()))
