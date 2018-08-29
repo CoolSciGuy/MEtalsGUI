@@ -26,7 +26,7 @@ def graph(Data , Station, Constituent ):
 
     DataX = data(Data , Station)
      
-    Data2 = DataX[Constituent].as_matrix() #matrix
+    Data2 = DataX[Constituent].values #matrix
     Data2=Data2[~np.isnan(Data2)]
     
     #error if there is no data
@@ -62,6 +62,7 @@ def graph(Data , Station, Constituent ):
         plt.show()
         
         plt.rcParams.update({'font.size': 12})
+        
         
         fifthP = np.nanpercentile(Data2,5)
         tenthP = np.nanpercentile(Data2,10)
@@ -105,7 +106,7 @@ def graph2(Data , Station, Constituent ):
         if Unit[2]!=0:
             plt.axhline(y=Unit[2], color='r', linestyle=':')                   
         plt.show()        
-               
+         
         stats = DataX [[ Constituent , 'months2']].groupby('months2').describe()
         stats2 = DataX [[ Constituent ]].describe()
         
@@ -139,7 +140,7 @@ def graph3(Data , Station, Constituent  ):
         plt.ylabel(Constituent+Unit[0] )
         plt.suptitle("")
         plt.xlabel('Stations, n = ' + str(DataX[Constituent].count()))
-        plt.title('Boxplot of Ambient '+Constituent+' by station')
+        plt.title('Boxplot of Ambient '+Constituent+' by station' + " ("+Station + ")")
         plt.gcf().autofmt_xdate()
         if Unit[1]!=0:
             plt.axhline(y=Unit[1], color='r', linestyle=':')
@@ -202,7 +203,7 @@ def graph4(Data , Station, Constituent ):
         
 #        stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
         
-
+        
             
         return  stats.round(decimals=2) , stats2.round(decimals=2)  # , stats3.round(decimals=2)
             
