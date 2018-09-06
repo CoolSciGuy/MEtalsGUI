@@ -1,13 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jul 17 13:40:21 2018
+Created on Tue Sep 6 2018
 
-@author: amirreza.sharifi
-"""
-
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Mar 27 09:16:05 2018
 @author: amirreza.sharifi
 """
 
@@ -19,14 +13,9 @@ Created on Tue Mar 27 09:16:05 2018
 from ipywidgets import interact, interactive, fixed, interact_manual
 import ipywidgets as widgets
 from IPython.display import display , HTML
-import numpy as np
-import os.path
-import pandas as pd
 
 
-
-
-from analysis import  AnaVSPot4
+from analysis import  AnaVSPot5
 from analysis2 import read_data
 
 Data = read_data()
@@ -40,8 +29,8 @@ text = ""
 #sys.setdefaultencoding('utf8')
 
 
-def ff(i , j):
-    text = AnaVSPot4( DataX , j , i) 
+def ff(i , j , k):
+    text = AnaVSPot5( DataX , i,j  ,k) 
     display(text)
 
 
@@ -60,8 +49,15 @@ j=widgets.Select(
     description='Constituent',
     disabled=False)
 
-ui = widgets.HBox([i, j])
-out =widgets.interactive_output(ff, {'i': i, 'j': j }  )
+k=widgets.Select(
+    options=["month","quarter" , "year" ],
+    value="quarter",
+    # rows=10,
+    description='time',
+    disabled=False)
+
+ui = widgets.HBox([i, j,k])
+out =widgets.interactive_output(ff, {'i': i, 'j': j , 'k':k }  )
 
 
 display(ui, out)
