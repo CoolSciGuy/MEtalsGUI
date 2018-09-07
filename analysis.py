@@ -95,7 +95,7 @@ def graph2(Data , Station, Constituent ):
         import pandas as pd
         return  pd.DataFrame({'A' : []}) , pd.DataFrame({'A' : []}) 
     else:
-        DataX.boxplot(column = [Constituent],by='month' , figsize = (15,6),showfliers=showflier)
+        DataX.boxplot(column = [Constituent],by='months2' , figsize = (15,6),showfliers=showflier)
         plt.ylabel(Constituent+Unit[0])
         plt.xlabel('Months, n = ' + str(DataX[Constituent].count()))
         plt.suptitle("")
@@ -107,11 +107,11 @@ def graph2(Data , Station, Constituent ):
             plt.axhline(y=Unit[2], color='r', linestyle=':')                   
         plt.show()        
          
-        stats = DataX [[ Constituent , 'month']].groupby('month').describe()
+        stats = DataX [[ Constituent , 'months2']].groupby('months2').describe()
         stats2 = DataX [[ Constituent ]].describe()
         
         Violation = DataX[DataX[Constituent].gt(Unit[2])]             
-        #stats3 = Violation[[ Constituent , 'month']].groupby('month').describe()
+        #stats3 = Violation[[ Constituent , 'months2']].groupby('months2').describe()
         #stats3['% Exceedence'] = stats3[stats3.columns[0]]/stats[stats.columns[0]]*100
         return  stats.round(decimals=2) , stats2.round(decimals=2)   #, stats3.round(decimals=2) 
         
@@ -255,7 +255,7 @@ def AnaVSPot2( DataX , Constituent , Station ):
     
               
             
-        DataX['stamp'] = (DataX['month']-0.5)/12 + DataX['year']
+        DataX['stamp'] = (DataX['months2']-0.5)/12 + DataX['year']
         Unit = ""
         Unit =  units(Constituent)
         plt.rcParams.update({'font.size': 16})
@@ -319,6 +319,8 @@ def AnaVSPot3( DataX , Constituent , Station):
         
 def AnaVSPot4( DataX , Constituent , Station):
     import seaborn as sns
+    
+    
     Data= DataX.dropna(subset = [Constituent]) 
     DataX=Data
     
@@ -326,17 +328,26 @@ def AnaVSPot4( DataX , Constituent , Station):
     #error if there is no data
     if DataX[Constituent].sum() == 0:
         return  "No data here"  
+    
+    
     else:
     
         if Station[0] =='All Stations':
             DataX=Data
+
         elif Station[0] in {"AAG01",	"AAG02",	"ANA01",	"ANA02",	"ANA03",	"ANA04",	"ANA05",	"ANA06",	"ANA07",	"ANA08",	"ANA09",	"ANA10",	"ANA11",	"ANA12",	"ANA13",	"ANA14",	"ANA15",	"ANA16",	"ANA17",	"ANA18",	"ANA19",	"ANA20",	"ANA21",	"ANA21 ",	"ANA22",	"ANA23",	"ANA24",	"ANA25",	"ANA26",	"ANA27",	"ANA29",	"ANA30" ,"TDU01",	"TFC01",	"TFD01",	"TFE01",	"TFS01",	"THR01",	"TNA01",	"TNS01",	"TOR01",	"TPB01",	"TTX27",	"TUT01",	"TWB01",	"TWB02",	"TWB03",	"TWB04",	"TWB05",	"TWB06" , "TFS01" ,"KNG01",	"KNG02" ,"PMS01",	"PMS02",	"PMS03",	"PMS05",	"PMS07",	"PMS08",	"PMS09",	"PMS10",	"PMS11",	"PMS12",	"PMS13",	"PMS16",	"PMS18",	"PMS21",	"PMS21 ",	"PMS23",	"PMS25",	"PMS27",	"PMS29",	"PMS31",	"PMS33",	"PMS35",	"PMS37",	"PMS39",	"PMS41",	"PMS44",	"PMS46",	"PMS48",	"PMS51" , "PMS52" ,"TBK01",	"TBR01", "TCO01", "TCO06" , "TDA01" , "TDO01" , "TFB01" , "TFB02","RCR01",	"RCR04","RCR07",	"RCR09" ,"TKV01""TLU01",	"TMH01",	"TPI01",	"TPO01",	"TPY01",	"TSO01" ,"PWC04"  ,"PTB01" ,"CHAIN"}:
             DataX =DataX[DataX['Station'].isin(Station)]
+            
+            
+        
+        
         else:
+            
+   
             DataX =DataX[DataX['Watershed'].isin(Station)]
             
-    if DataX[Constituent].sum() == 0:
-        return  "No data here" 
+            if DataX[Constituent].sum() == 0:
+                return  "No data here"
             
             
     Unit = ""
@@ -355,55 +366,4 @@ def AnaVSPot4( DataX , Constituent , Station):
     plt.show()
     return 'Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)'
 
-         
-
-
-def AnaVSPot5( DataX ,   Station , Constituent , time ):
-    
-
-    
-    
-    import seaborn as sns
-    
-    
-    Data= DataX.dropna(subset = [Constituent]) 
-    DataX=Data
-    
-
-    #error if there is no data
-    if DataX[Constituent].sum() == 0:
-        return  "No data here"  
-    
-    
-    else:
-    
-        if Station[0] =='All Stations':
-            DataX=Data
-        elif Station[0] in {"AAG01",	"AAG02",	"ANA01",	"ANA02",	"ANA03",	"ANA04",	"ANA05",	"ANA06",	"ANA07",	"ANA08",	"ANA09",	"ANA10",	"ANA11",	"ANA12",	"ANA13",	"ANA14",	"ANA15",	"ANA16",	"ANA17",	"ANA18",	"ANA19",	"ANA20",	"ANA21",	"ANA21 ",	"ANA22",	"ANA23",	"ANA24",	"ANA25",	"ANA26",	"ANA27",	"ANA29",	"ANA30" ,"TDU01",	"TFC01",	"TFD01",	"TFE01",	"TFS01",	"THR01",	"TNA01",	"TNS01",	"TOR01",	"TPB01",	"TTX27",	"TUT01",	"TWB01",	"TWB02",	"TWB03",	"TWB04",	"TWB05",	"TWB06" , "TFS01" ,"KNG01",	"KNG02" ,"PMS01",	"PMS02",	"PMS03",	"PMS05",	"PMS07",	"PMS08",	"PMS09",	"PMS10",	"PMS11",	"PMS12",	"PMS13",	"PMS16",	"PMS18",	"PMS21",	"PMS21 ",	"PMS23",	"PMS25",	"PMS27",	"PMS29",	"PMS31",	"PMS33",	"PMS35",	"PMS37",	"PMS39",	"PMS41",	"PMS44",	"PMS46",	"PMS48",	"PMS51" , "PMS52" ,"TBK01",	"TBR01", "TCO01", "TCO06" , "TDA01" , "TDO01" , "TFB01" , "TFB02","RCR01",	"RCR04","RCR07",	"RCR09" ,"TKV01""TLU01",	"TMH01",	"TPI01",	"TPO01",	"TPY01",	"TSO01" ,"PWC04"  ,"PTB01" ,"CHAIN"}:
-            DataX =DataX[DataX['Station'].isin(Station)]
-        else:
-            DataX =DataX[DataX['Watershed'].isin(Station)]
-            
-    if DataX[Constituent].sum() == 0:
-        return  "No data here" 
-            
-    Unit = ""
-    Unit =  units(Constituent)
-
-#    plt.figure(3, figsize = (12,12))
-#    plt.title('Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)')
-    sns.set(style="darkgrid")
-    ax = sns.FacetGrid( DataX ,  row=time, col="Watershed", margin_titles=True) 
-    bins = np.linspace(0, DataX[Constituent].max(), 10)
-    ax.map(plt.hist, Constituent, color="steelblue", bins=bins)
-
-
-#    plt.ylabel(Constituent+Unit[0])
-#    plt.xlabel('Years, n = ' + str(DataX[Constituent].count()))
-#    if Unit[1]!=0:
-#        plt.axhline(y=Unit[1], color='r', linestyle=':')
-#    if Unit[2]!=0:
-#        plt.axhline(y=Unit[2], color='r', linestyle=':')        
-#    plt.show()
-    return 'Boxplot of Ambient '+Constituent+', Comparison between Anacostia and Potomac (all stations)'
-
+                    
