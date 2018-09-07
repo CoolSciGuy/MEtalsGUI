@@ -1,0 +1,4 @@
+1-run jupyter and make/save an ipython file (ipynb)
+2-load all files to github
+3-add another file called requirements.txt and include all modules that need to be installed (numpy, etc)
+4-goto https://mybinder.org/ add link to github project
