@@ -66,40 +66,40 @@ def units(Constituent):
         thresholdmin = 5     
         Class = "C" # done
     elif Constituent == 'Cadmium':
-        Unit = ' (µg/lit)'
+        Unit = ' (1e-6g/lit)'
         thresholdmax = 0     
         Class = "NA"
     elif Constituent == 'Chromium':
-        Unit = ' (µg/lit)'
+        Unit = ' (1e-6g/lit)'
         thresholdmax = 0     
         Class = "NA"          
     elif Constituent == 'Copper':
-        Unit = ' (µg/lit)' 
+        Unit = ' (1e-6g/lit)' 
         thresholdmax = 0     
         Class = "NA" 
     elif Constituent == 'Iron':
-        Unit = ' (µg/lit)'
+        Unit = ' (1e-6g/lit)'
         thresholdmax = 0     
         Class = "NA" 
     elif Constituent == 'Lead':
-        Unit = ' (µg/lit)'
+        Unit = ' (1e-6g/lit)'
         thresholdmax = 0     
         Class = "NA" 
     elif Constituent == 'Mercury':
-        Unit = ' (µg/lit)'  
+        Unit = ' (1e-6g/lit)'  
         thresholdmax = 0     
         Class = "NA" 
     elif Constituent == 'Zinc':
-        Unit = ' (µg/lit)'    
+        Unit = ' (1e-6g/lit)'    
         thresholdmax = 0     
         Class = "NA" 
     elif Constituent == 'Arsenic':
-        Unit = ' (µg/lit)'
+        Unit = ' (1e-6g/lit)'
         thresholdmax = 0     
         Class = "NA" 
         
     elif Constituent == 'Selenium':
-        Unit = ' (µg/lit)'
+        Unit = ' (1e-6g/lit)'
         thresholdmax = 0     
         Class = "NA" 
     elif Constituent == 'Phytoplankton':
